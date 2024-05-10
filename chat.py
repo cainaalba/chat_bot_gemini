@@ -2,27 +2,27 @@
 import google.generativeai as gemini
 
 google_api_key = 'AIzaSyBNcoDANOBULy-gXLnKmUddlzgra0IkjBk'
-gemini.configure(api_key = google_api_key)
+gemini.configure(api_key=google_api_key)
 
 # LISTA MODELOS DISPONÍVEIS
 # for m in gemini.list_models():
 #     print(m.name)
 
 generation_config = {
-    "candidate_count" : 1,
-    "temperature"     : 0.5,
+    "candidate_count": 1,
+    "temperature": 0.5,
 }
 
 safety_settings = {
-    "HARASSMENT" : "BLOCK_NONE",
-    "HATE"       : "BLOCK_NONE",
-    "SEXUAL"     : "BLOCK_NONE",
-    "DANGEROUS"  : "BLOCK_NONE",
+    "HARASSMENT": "BLOCK_NONE",
+    "HATE": "BLOCK_NONE",
+    "SEXUAL": "BLOCK_NONE",
+    "DANGEROUS": "BLOCK_NONE",
 }
 
-model = gemini.GenerativeModel(model_name = 'gemini-1.0-pro',
-                               generation_config = generation_config, 
-                               safety_settings = safety_settings)
+model = gemini.GenerativeModel(model_name='gemini-1.0-pro',
+                               generation_config=generation_config,
+                               safety_settings=safety_settings)
 
 prompt = """
 Instruções para o Assistente Virtual da Claudia Confeitaria:
@@ -66,22 +66,24 @@ Instruções para o Assistente Virtual da Claudia Confeitaria:
 "Mande que você não pode responder isso."
 """
 
+
 def main():
     # chat = model.start_chat(history = [])
     mensagem = ''
     print('Bem-vindo ao meu assistente virtual! Como posso ajudá-lo?')
     print('Para finalizar o atendimento, digite "fim" (sem as áspas).')
     while True:
-        if mensagem.lower == 'fim':
-            break
-        
         mensagem = input('Digite sua pergunta ou comando: ')
+
+        if mensagem.lower() == 'fim':
+            break
 
         response_text = model.generate_content(prompt + mensagem).text
 
         # response_text = chat.send_message(response_text).text
         print('Resposta: ', response_text, '\n')
 
-    #print('Histórico desta conversa:\n', chat.history)
+    # print('Histórico desta conversa:\n', chat.history)
+
 
 main()
