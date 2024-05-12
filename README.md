@@ -24,6 +24,8 @@ A url para enviar a mensagem ao rementente, é gerada no app da api do whatsapp 
 
 ![image](https://github.com/cainaalba/chat_bot_gemini/assets/57020103/c29813b5-d63e-457a-8b86-4ea84338b3fa)
 
+Para iniciar o projeto rode o arquivo _webhook.py_.
+
 **Prints da execução**
 
 ![Captura de Tela 2024-05-11 às 22 32 49](https://github.com/cainaalba/chat_bot_gemini/assets/57020103/c36c4511-3658-4bfa-947f-aab0e4d20b35)
