@@ -8,7 +8,11 @@ de acordo com os parâmetros definidos no prompt. A resposta é enviada ao remen
 Criar uma conta no Meta Developers e um app criado com a Api do WhatsApp e Webhook.
 Configurar um link público no webhook da api do WhatsApp Business, no modelo Whatsapp Business Account. Ao salvar,  api do whatsapp envia uma requisição _GET_ para o link, que deve devolver o valor do parâmetro _hub.challenge_, que vem na url da requisição.
 
-Neste modelo, foi usado o **NRok** para criar um link público, apontando para o localhost:5555 - configurado no arquivo _webhook.py_.
+Neste modelo, foi usado o **Ngrok** para criar um link público, apontando para o _http://localhost:5555_ - configurado no arquivo _webhook.py_. 
+
+Baixe o Ngrok _https://ngrok.com/download_.
+
+Para iniciar o Ngrok, navegue até a pasta onde o arquivo baixado do site foi extraído e rode o comando: _./ngrok http http://localhost:5555_
 
 <img width="492" alt="Captura de Tela 2024-05-12 às 19 11 07" src="https://github.com/cainaalba/chat_bot_gemini/assets/57020103/cdec6127-03fc-49b1-9eb5-47f376888e7e">
 
