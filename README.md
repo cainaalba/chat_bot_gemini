@@ -12,7 +12,7 @@ Neste modelo, foi usado o **Ngrok** para criar um link público, apontando para 
 
 Baixe o Ngrok _https://ngrok.com/download_.
 
-Para iniciar o Ngrok, navegue até a pasta onde o arquivo baixado do site foi extraído e rode o comando: _./ngrok http http://localhost:5555_
+Para iniciar o Ngrok, navegue até a pasta onde o arquivo baixado foi extraído, via terminal, e rode o comando: _./ngrok http http://localhost:5555_
 
 <img width="492" alt="Captura de Tela 2024-05-12 às 19 11 07" src="https://github.com/cainaalba/chat_bot_gemini/assets/57020103/cdec6127-03fc-49b1-9eb5-47f376888e7e">
 
