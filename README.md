@@ -12,6 +12,8 @@ Neste modelo, foi usado o **NRok** para criar um link público, apontando para o
 
 <img width="492" alt="Captura de Tela 2024-05-12 às 19 11 07" src="https://github.com/cainaalba/chat_bot_gemini/assets/57020103/cdec6127-03fc-49b1-9eb5-47f376888e7e">
 
+A url para enviar a mensagem ao rementente, é gerada no app da api do whatsapp no Meta Developers, bem como o token.
+
 **Projeto ainda está na versão inicial.**
 
 **Modelo de arquivo config.cfg:**
