@@ -9,29 +9,31 @@ config.read('config.cfg')
 
 app = Flask(__name__)
 
+
 # RECEBE AS MENSAGENS DA CONVERSA DO WHATSAPP
 @app.route('/', methods=['POST'])
 def receberMensagem():
     dadosRecebidos = request.json
     print(f"JSON Recebido -> {dadosRecebidos}")
-    
+
     dadosRecebidosFormatados = formatarDadosRecebidos(dadosRecebidos)
     if dadosRecebidosFormatados is None:
-        return
-    
-    deserializarJson(dadosRecebidosFormatados)
+        return jsonify({'status': 'error'})
+
+    if deserializarJson(dadosRecebidosFormatados) is None:
+        return jsonify({'status': 'error'})
     return jsonify({'status': 'success'})
-    
+
 
 @app.route('/', methods=['GET'])
 def receberRequisicoesConfiguracaoWebhook():
     urlRecebida = request.url
-    
+
     # "QUEBRA" URL PARA EXTRAIR OS PARÂMETROS
     parse = urlparse(urlRecebida)
     parametros = parse_qs(parse.query)
     print(f"Parse parametros: {parametros}")
-    
+
     challenge = ''
     if 'hub.verify_token' in parametros:
         if parametros['hub.verify_token'][0] == config['TOKENS']['TOKEN_WPP_WEBHOOK']:
@@ -44,16 +46,18 @@ def receberRequisicoesConfiguracaoWebhook():
         print('Token não localizado')
     return challenge
 
+
 def formatarDadosRecebidos(dados):
     try:
         dadosFormatados = str(dados)
         # SUBSTITUI ASPAS SIMPLES POR DUPLAS
         if dadosFormatados.__contains__("'"):
-            dadosFormatados = dadosFormatados.replace("'",'"')
+            dadosFormatados = dadosFormatados.replace("'", '"')
         return dadosFormatados
     except TypeError as typeError:
         print(f"KeyError -> {typeError}")
         return None
+
 
 # DESERIALIZA O JSON
 def deserializarJson(dados):
@@ -66,7 +70,7 @@ def deserializarJson(dados):
             mensagem = jsonDeserializado["entry"][0]["changes"][0]["value"]["messages"][0]["text"]["body"]
             print(f"Número remetente-> {numeroRemetente} \n")
             print(f"Mensagem -> {mensagem} \n")
-            
+
             return chat.processarMensagemRecebida(numeroRemetente,
                                                   mensagem)
         except KeyError as keyError:
@@ -75,6 +79,7 @@ def deserializarJson(dados):
     except json.JSONDecodeError as decodeError:
         print(f"JSONDecodeError -> {decodeError}")
     return None
+
 
 if __name__ == '__main__':
     app.run(debug=True, port=5555)

@@ -45,8 +45,8 @@ Se não for possível responder à pergunta do cliente, direcione-o para o atend
 Utilize as mensagens de saudação e despedida padronizadas.
 Mensagens de Saudação:
 
-Inicial: "Olá! Sou a assistente virtual da loja de Games Alba. Como posso ajudá-lo hoje?"
-Retorno: "Bem-vindo de volta à loja de Games Alba! Como posso ajudá-lo hoje?"
+Inicial: "Olá! Sou a assistente virtual da loja de Alba Games. Como posso ajudá-lo hoje?"
+Retorno: "Bem-vindo de volta à loja de Alba Games! Como posso ajudá-lo hoje?"
 Mensagens de Despedida:
 
 Finalização de compra: "Obrigado por sua compra! Volte sempre!"
@@ -54,12 +54,30 @@ Sem compra: "Foi um prazer atendê-lo! Qualquer dúvida, estamos à disposição
 Encaminhamento para atendimento humano: "Um de nossos atendentes entrará em contato com você em breve."
 
 Produtos e Preços:
-Jogo X: R$ 150,00
-Jogo Y: R$ 200,00
-Console Z: R$ 1.000,00
-Acessório A: R$ 50,00
-Acessório B: R$ 100,00
-Xbox: R$ 2.000,00
+Consoles:
+PlayStation 5: R$ 3.899,00
+Xbox Series X: R$ 3.899,00
+Nintendo Switch: R$ 2.799,00
+
+Jogos:
+Grand Theft Auto V: R$ 199,00
+Elden Ring: R$ 299,00
+God of War Ragnarok: R$ 249,00
+Horizon Forbidden West: R$ 249,00
+The Legend of Zelda: Breath of the Wild 2: R$ 249,00
+
+Acessórios:
+Controle DualSense (PlayStation 5): R$ 299,00
+Controle sem Fio Xbox Series X/S: R$ 249,00
+Controle Joy-Con (Nintendo Switch): R$ 249,00
+Headset Gamer HyperX Cloud II: R$ 499,00
+Cadeira Gamer Arozzi Verona Pro: R$ 1.299,00
+
+Outros:
+Camiseta God of War Ragnarok: R$ 99,00
+Caneca PlayStation: R$ 49,00
+Funko Pop Naruto: R$ 99,00
+Jogo de tabuleiro Monopoly Gamer: R$ 199,00
 
 Horário de Funcionamento:
 Segunda a sexta: 10h às 20h
@@ -94,15 +112,16 @@ Cliente: Desculpe, mas não entendi sua última resposta.
 Assistente: Peço desculpas por isso. Não tenho certeza do que você está perguntando. Vou encaminhar sua solicitação para um atendente humano para que possa te auxiliar da melhor forma.
 """
 
+
 # PROCESSA OS DADOS RECEBIDOS PARA RESPONDER AO USUÁRIO
-def processarMensagemRecebida(numeroTelefone, mensagemRecebida):    
+def processarMensagemRecebida(numeroTelefone, mensagemRecebida):
     numeroTelefoneFormatado = formatarNumeroTelefone(numeroTelefone)
-    
-    chat = model.start_chat(history = [])
+
+    chat = model.start_chat(history=[])
     respostaGerada = chat.send_message(prompt + "\nPergunta" + mensagemRecebida).text
 
     print(f"Resposta gerada: {respostaGerada} \n")
-        
+
     enviaRetornoMensagemProcessada(numeroTelefoneFormatado,
                                    respostaGerada)
     return
@@ -111,28 +130,30 @@ def processarMensagemRecebida(numeroTelefone, mensagemRecebida):
 def enviaRetornoMensagemProcessada(numeroTelefone, mensagem):
     url = config['LINKS']['LINK_API_WPP']
     token = config['TOKENS']['TOKEN_WPP']
-    
+
     headers = {
         "Content-Type": "application/json",
         "Authorization": "Bearer " + token
     }
-    
+
     jsonMensagem = {
-                        "messaging_product": "whatsapp",
-                        "to": numeroTelefone,
-                        "type": "text",
-                        "text": {
-                            "body": mensagem
-                        }
-                    }
-    retorno = requests.post(url, 
-                            headers=headers, 
+        "messaging_product": "whatsapp",
+        "to": numeroTelefone,
+        "type": "text",
+        "text": {
+            "body": mensagem
+        }
+    }
+    retorno = requests.post(url,
+                            headers=headers,
                             json=jsonMensagem)
     print(f"Retorno api: {retorno.json}")
     return
 
+
 # FORMATAR NUMERO DE TELEFONE, ADICIONANDO UM 9 SE FALTAR
 def formatarNumeroTelefone(numeroTelefone):
+    numeroTelefoneFormatado = numeroTelefone
     regexNumeroTelefone = r'^\d{2}\d{9}$'
     if not re.match(regexNumeroTelefone, numeroTelefone):
         # USA SLICE DE STRING
