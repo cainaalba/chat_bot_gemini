@@ -4,29 +4,45 @@ O número de celular de testes, recebe as mensagens no whatsapp, que são proces
 junto com um **prompt modelo** (solicitei ao Gemini gerar um promopt de uma loja de games, com algumas instruções) é enviado à IA Google Gemini que devolve uma **resposta**, 
 de acordo com os parâmetros definidos no prompt. A resposta é enviada ao rementente original.
 
-**Instruções de configuração:**
-Criar uma conta no Meta Developers e um app criado com a Api do WhatsApp e Webhook.
-Configurar um link público no webhook da api do WhatsApp Business, no modelo Whatsapp Business Account. Ao salvar,  api do whatsapp envia uma requisição _GET_ para o link, que deve devolver o valor do parâmetro _hub.challenge_, que vem na url da requisição.
+# Instruções de configuração
+* Criar uma conta no Meta Developers e um app criado com a Api do WhatsApp e Webhook.
+* A url para enviar a mensagem ao rementente, é gerada no app da api do whatsapp no Meta Developers, bem como o token.
+* Configurar um link público no webhook da api do WhatsApp Business, no modelo Whatsapp Business Account. Ao salvar,  api do whatsapp envia uma requisição _GET_ para o link, que deve devolver o valor do parâmetro _hub.challenge_, que vem na url da requisição.
 
 Neste modelo, foi usado o **Ngrok** para criar um link público, apontando para o _http://localhost:5555_ - configurado no arquivo _webhook.py_. 
 
-Baixe o Ngrok _https://ngrok.com/download_.
-
-Para iniciar o Ngrok, navegue até a pasta onde o arquivo baixado foi extraído, via terminal, e rode o comando: _./ngrok http http://localhost:5555_
-
-<img width="492" alt="Captura de Tela 2024-05-12 às 19 11 07" src="https://github.com/cainaalba/chat_bot_gemini/assets/57020103/cdec6127-03fc-49b1-9eb5-47f376888e7e">
-
-A url para enviar a mensagem ao rementente, é gerada no app da api do whatsapp no Meta Developers, bem como o token.
+* Baixe o Ngrok _https://ngrok.com/download_.
+* Para iniciar o Ngrok, navegue até a pasta onde o arquivo baixado foi extraído, via terminal, e rode o comando:
+````
+./ngrok http http://localhost:5555
+````
+````python
+if __name__ == '__main__':
+    app.run(debug=True, port=5555)
+````
+Link para usar no webhook da api do whatsapp:
+<img width="949" alt="Captura de Tela 2024-05-13 às 21 01 21" src="https://github.com/cainaalba/chat_bot_gemini/assets/57020103/22d33c63-ccb2-4f46-adfd-3dfee9b04708">
 
 **Projeto ainda está na versão inicial.**
 
-**Modelo de arquivo config.cfg:**
+# Modelo de arquivo config.cfg
 
-![image](https://github.com/cainaalba/chat_bot_gemini/assets/57020103/c29813b5-d63e-457a-8b86-4ea84338b3fa)
+````cfg
+[TOKENS]
+# Token API Gemini
+TOKEN_GEMINI = <API_KEY>
+
+# Token API Whatsapp
+TOKEN_WPP = <API_KEY>
+TOKEN_WPP_WEBHOOK = <TOKEN>
+
+[LINKS]
+LINK_API_WPP = <LINK_API_WPP>
+````
 
 Para iniciar o projeto rode o arquivo _webhook.py_.
 
-**Prints da execução**
+# Prints da execução
 
 ![Captura de Tela 2024-05-11 às 22 32 49](https://github.com/cainaalba/chat_bot_gemini/assets/57020103/c36c4511-3658-4bfa-947f-aab0e4d20b35)
 
